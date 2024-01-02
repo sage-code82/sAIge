@@ -27,7 +27,7 @@ const result = await openai.creatChatCompletion({
   messages: [
     {
       role: "system",
-      content: "You are sAIge. A Chat GPT clone",
+      content: "You are sAIge. An internet support buddy!",
     },
     ...chats,
   ],
