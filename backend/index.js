@@ -13,8 +13,8 @@ app.listen(port, () => {
 });
 
 const configuration = new Configuration({
-  organization: "org-Q1QghoEq1nGB71jxZVJOMp7R",
-  apiKey: "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",
+  organization: process.env.REACT_APP_ORGANIZATION,
+  apiKey: process.env.REACT_APP_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
