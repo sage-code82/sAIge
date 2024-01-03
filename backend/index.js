@@ -13,26 +13,26 @@ app.listen(port, () => {
 });
 
 const configuration = new Configuration({
-  organization: process.env.REACT_APP_ORGANIZATION,
-  apiKey: process.env.REACT_APP_API_KEY,
+  organization: "org-Q1QghoEq1nGB71jxZVJOMp7R",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
-app.post("/", async (request, response) => {});
+app.post("/", async (request, response) => {
+  const { chats } = request.body;
 
-const { chats } = request.body;
+  const result = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: "system",
+        content: "You are sAIge. An internet support buddy!",
+      },
+      ...chats,
+    ],
+  });
 
-const result = await openai.creatChatCompletion({
-  model: "gpt-3.5-turbo",
-  messages: [
-    {
-      role: "system",
-      content: "You are sAIge. An internet support buddy!",
-    },
-    ...chats,
-  ],
-});
-
-response.json({
-  output: result.data.choices[0].message,
+  response.json({
+    output: result.data.choices[0].message,
+  });
 });

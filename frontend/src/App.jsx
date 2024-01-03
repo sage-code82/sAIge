@@ -17,7 +17,24 @@ function App() {
 
     setMessage("");
 
-    alert(message);
+    fetch("http://localhost:8080/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chats,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        msgs.push(data.output);
+        setChats(msgs);
+        setIsTyping(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
