@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { OpenAI } from "openai";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -12,25 +12,19 @@ app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 
-const configuration = new Configuration({
-  organization: "org-Q1QghoEq1nGB71jxZVJOMp7R",
-  apiKey: "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",
+const openai = new OpenAI({
+  apiKey: process.env.REACT_APP_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 app.post("/", async (request, response) => {
   const { chats } = request.body;
 
-  const result = await openai.createChatCompletion({
+  const chatCompletion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    messages: [
-      {
-        role: "system",
-        content: "You are sAIge. An internet support buddy!",
-      },
-      ...chats,
-    ],
+    messages: [{ role: "user", content: "Hello!" }],
   });
+
+  console.log(chatCompletion.choices[0].message);
 
   response.json({
     output: result.data.choices[0].message,
